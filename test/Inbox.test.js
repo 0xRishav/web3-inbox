@@ -4,7 +4,7 @@ const ganache = require("ganache-cli");
 const assert = require("assert");
 const Web3 = require("web3");
 
-const { interface, bytecode } = require("../compile");
+const { abi, evm } = require("../compile");
 
 const web3 = new Web3(ganache.provider());
 let inbox, accounts;
@@ -13,8 +13,8 @@ const INITIAL_MESSAGE = "Hii there!";
 beforeEach(async () => {
   try {
     accounts = await web3.eth.getAccounts();
-    inbox = await new web3.eth.Contract(JSON.parse(interface))
-      .deploy({ data: bytecode, arguments: [INITIAL_MESSAGE] })
+    inbox = await new web3.eth.Contract(JSON.parse(abi))
+      .deploy({ data: evm.bytecode.object, arguments: [INITIAL_MESSAGE] })
       .send({ from: accounts[0], gas: "1000000" });
   } catch (err) {
     console.log(err);

@@ -1,7 +1,7 @@
 // deploy code will go here
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 const Web3 = require("web3");
-const { interface, bytecode } = require("./compile");
+const { abi, evm } = require("./compile");
 
 // modify possible web course idle fiber female problem ketchup advance advice betray
 
@@ -17,8 +17,8 @@ const deploy = async () => {
 
   console.log("deploying contract with account: ", accounts[0]);
 
-  const deployedInbox = await new web3.eth.Contract(JSON.parse(interface))
-    .deploy({ data: bytecode, arguments: ["Hey there"] })
+  const deployedInbox = await new web3.eth.Contract(JSON.parse(abi))
+    .deploy({ data: evm.bytecode.object, arguments: ["Hey there"] })
     .send({ from: accounts[0], gas: "1000000" });
 
   console.log("contract deployed to address: ", deployedInbox.options.address);
